@@ -115,7 +115,9 @@ def autoreply():
 def secureurl():
   domain = request.args.get("domain", "")
   secureurl = f"https://{domain}"
-  return secureurl  
+  return secureurl
+  
+    
 
 if __name__ == "__main__":
   app.run()
