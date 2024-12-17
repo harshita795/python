@@ -88,6 +88,9 @@ def email():
   email = f"{first_name}.{last_name}@{domain}"
   return email
 
+
+# PY_1.1_HW_2
+
 @app.route("/custom-commit", methods=["GET"])
 def customCommit():
   commit_type = request.args.get("type", "")
@@ -145,6 +148,81 @@ def textToCsv():
   textToCsv = f"{id}, {email}, {roll_number}"
   return textToCsv
 
+# PY_1.2_HW_1 (operators)
+
+@app.route("/total-distance", methods=["GET"])
+def total_distance():
+  distance1 = float(request.args.get("distance1", 0))
+  distance2 = float(request.args.get("distance2", 0))  
+  total_distance = distance1 + distance2
+  return str(total_distance)
+
+@app.route("/total-time", methods=["GET"])
+def total_time():
+  time1 = float(request.args.get("time1", 0))
+  time2 = float(request.args.get("time2", 0))
+  time3 = float(request.args.get("time3", 0))
+  total_time = time1 + time2 + time3
+  return str(total_time)
+
+@app.route("/average-speed", methods=["GET"])
+def average_speed():
+  total_distance = float(request.args.get("totalDistance", 0))
+  total_time = float(request.args.get("totalTime", 1))
+  average_speed = total_distance / total_time
+  return str(average_speed)
+
+@app.route("/interest-earned", methods=["GET"])
+def interest_earned():
+  principal = float(request.args.get("principal", 1))
+  rate = float(request.args.get("rate", 1))
+  time = float(request.args.get("time", 1))
+  interest_earned = (principal * rate * time) / 100
+  return str(interest_earned)
+
+@app.route("/total-marks", methods=["GET"])
+def total_marks():
+  marks1 = float(request.args.get("marks1", 0))
+  marks2 = float(request.args.get("marks2", 0))
+  totalMarks = marks1 + marks2
+  return str(totalMarks)
+
+@app.route("/total-weight", methods=["GET"])
+def total_weight():
+  weight1 = float(request.args.get("weight1", 0))
+  weight2 = float(request.args.get("weight2", 0))
+  weight3 = float(request.args.get("weight3", 0))
+  totalWeight = weight1 + weight2 + weight3
+  return str(totalWeight)
+
+@app.route("/monthly-salary", methods=["GET"])
+def monthly_salary():
+  annual_salary = float(request.args.get("annualSalary", 0))
+  monthly_salary = annual_salary / 12
+  return str(monthly_salary)  
+
+@app.route("/total-pages", methods=["GET"]) 
+def total_pages():
+  pagesPerDay = float(request.args.get("pagesPerDay", 1))
+  days = float(request.args.get("days", 1))
+  totalPages = pagesPerDay * days
+  return str(totalPages)
+
+@app.route("/currency-conversion", methods=["GET"])
+def currency_conversion():
+  amount = float(request.args.get("amount", 1))
+  exchangeRate = float(request.args.get("exchangeRate", 1))
+  convertedAmount = amount * exchangeRate
+  return str(convertedAmount)
+
+@app.route("/average-sales", methods=["GET"])
+def average_sales():
+  sales1 = float(request.args.get("sales1", 1))  
+  sales2 = float(request.args.get("sales2", 1))
+  sales3 = float(request.args.get("sales3", 1))
+  avgSales = (sales1 + sales2 + sales3) / 3
+
+  return f"{avgSales:.2f}"
 
 if __name__ == "__main__":
   app.run()
