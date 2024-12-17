@@ -224,5 +224,59 @@ def average_sales():
 
   return f"{avgSales:.2f}"
 
+# PY_1.2_HW_2 (operators)
+
+@app.route("/bmi", methods=["GET"])
+def bmi():
+  height = float(request.args.get("height", 1)) 
+  weight = float(request.args.get("weight", 0))
+  bmi =  weight / (height * height) 
+  return f"Your BMI is {bmi:.2f}"
+
+@app.route("/checkout", methods=["GET"])
+def checkout():
+  product = request.args.get("product", 0)
+  units = int(request.args.get("units", 0))
+  price = float(request.args.get("price", 0))
+  total_price = price * units
+  return f"Your total for {units} {product} is {int(total_price)}"
+
+@app.route("/grade", methods=["GET"])
+def grade():
+  maths = float(request.args.get("maths", 0))
+  science = float(request.args.get("science", 0))
+  english = float(request.args.get("english", 0))
+  gradeInPercentage = ((maths + science + english) / 300 ) * 100
+  return f"Your grade in percentage is {round(gradeInPercentage)}%"
+
+@app.route("/discounted-price", methods=["GET"])
+def discountedPrice():
+  cartTotal = float(request.args.get("cartTotal", 0))
+  discount = float(request.args.get("discount", 0)) 
+  total_price = cartTotal - ( cartTotal * ( discount / 100 ) )
+  return f"Result: Your bill amount is {total_price:.1f}"
+
+
+@app.route("/split-bill", methods=["GET"])
+def splitBill():
+  billAmount = float(request.args.get("billAmount", 0))
+  numberOfFriends = int(request.args.get("numberOfFriends", 1))
+  splitAmount = billAmount / numberOfFriends
+  return f"Result: Each friend owes ₹{int(splitAmount)} against the bill"
+
+@app.route("/celsius-to-fahrenheit", methods=["GET"])
+def celsius_to_fahrenheit():
+  temperature = float(request.args.get("temperature", 0))
+  fahrenheit = temperature * 9/5 + 32 
+  return f"Result: {int(fahrenheit)} Fahrenheit"
+
+@app.route("/monthly_salary", methods=["GET"])
+def monthly_Salary():
+  totalHours = float(request.args.get("totalHours", 1))
+  hourlyWage = float(request.args.get("hourlyWage", 1))
+  monthly_salary = hourlyWage * totalHours
+  return f"Result: Your monthly salary is ₹{int(monthly_salary)}"
+  
+
 if __name__ == "__main__":
   app.run()
