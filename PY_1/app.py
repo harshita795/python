@@ -23,18 +23,18 @@ def fullname():
   fullname = f"{first_name} {last_name}"
   return fullname
 
-# @app.route("/date", methods=["GET"])
-# def formatdate():
-#   month = request.args.get("month", "")
-#   year = request.args.get("year","")
-#   formatted_date = f"{month} {year}"
-#   return formatted_date
+@app.route("/date", methods=["GET"])
+def formatdate():
+  month = request.args.get("month", "")
+  year = request.args.get("year","")
+  formatted_date = f"{month} {year}"
+  return formatted_date
 
-# @app.route("/greet", methods=["GET"])
-# def greet():
-#   name = request.args.get("name", "")
-#   greeting =f"Namaste, {name}"
-#   return greeting
+@app.route("/greet", methods=["GET"])
+def greet():
+  name = request.args.get("name", "")
+  greeting =f"Namaste, {name}"
+  return greeting
 
 @app.route("/address", methods=["GET"])
 def address():
@@ -71,7 +71,6 @@ def greet():
   city = request.args.get("city", "")
   greeting = f"You live in {city}"
   return greeting
-
 
 @app.route("/capital", methods=["GET"])
 def capital():
