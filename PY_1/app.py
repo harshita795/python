@@ -116,8 +116,35 @@ def secureurl():
   domain = request.args.get("domain", "")
   secureurl = f"https://{domain}"
   return secureurl
-  
-    
+
+@app.route("/sendotp", methods=["GET"])
+def sendotp():
+  otp_code = request.args.get("otpCode", "")
+  sendotp = f"Your OTP for account verification is {otp_code}. Do not share this with anyone"
+  return sendotp
+
+@app.route("/welcome", methods=["GET"])
+def welcome():
+  first_name = request.args.get("firstName", "")
+  email = request.args.get("email", "")
+  welcome = f"Hey {first_name}. We're excited to have you here, we'll send future notifications to your registered mail ({email})"
+  return welcome
+
+
+@app.route("/github-profile", methods=["GET"])
+def githubProfile():
+  username = request.args.get("userName", "")
+  githubProfile = f"https://github.com/{username}"
+  return githubProfile
+
+@app.route("/text-to-csv", methods=["GET"])
+def textToCsv():
+  id = request.args.get("id","")
+  email = request.args.get("email", "")
+  roll_number = request.args.get("rollNumber", "")
+  textToCsv = f"{id}, {email}, {roll_number}"
+  return textToCsv
+
 
 if __name__ == "__main__":
   app.run()
