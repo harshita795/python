@@ -402,6 +402,7 @@ def check_rating():
   return f"Restaurant rating is {result}"
 
 # PY_1.3_HW_2 (if-Else)
+
 @app.route("/check-bmi", methods=["GET"])
 def check_bmi():
   height = float(request.args.get("height", 1)) 
@@ -475,6 +476,46 @@ def check_experiences():
   else:
     result = "Noob"
   return f"Experience level is {result}"
+
+# PY_1.4_CW (modular functions)
+
+def getWelcomeMessage():
+  return "Welcome to the service"
+
+@app.route("/welcome-service", methods=["GET"])
+def welcome_service():
+  return getWelcomeMessage()
+
+def checkPasswordStrength(password):
+  if len(password) >= 15:
+    return "Password is strong"
+  else:
+    return "Password is weak"
+
+@app.route("/check-password", methods=["GET"])
+def check_password():
+  password = request.args.get("password", "")
+  return checkPasswordStrength(password)
+
+def getSum(num1, num2):
+  return num1 + num2
+
+@app.route("/sum", methods=["GET"])
+def sum():
+  num1 = float(request.args.get("num1", 0))
+  num2 = float(request.args.get("num2", 0))
+  return str(getSum(num1, num2))
+
+def getPersonalizedMessage(age, gender, name):
+  return f"Hello, {name}! You are {age} years old {gender}."
+
+@app.route("/personalized-greeting", methods=["GET"])
+def personalized_greeting():
+  age = int(request.args.get("age", 0))
+  gender = request.args.get("gender", "")
+  name = request.args.get("name", "")
+  return getPersonalizedMessage(age, gender, name)
+
 
 
 
