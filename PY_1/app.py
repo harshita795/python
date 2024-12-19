@@ -23,18 +23,18 @@ def fullname():
   fullname = f"{first_name} {last_name}"
   return fullname
 
-@app.route("/date", methods=["GET"])
-def formatdate():
-  month = request.args.get("month", "")
-  year = request.args.get("year","")
-  formatted_date = f"{month} {year}"
-  return formatted_date
+# @app.route("/date", methods=["GET"])
+# def formatdate():
+#   month = request.args.get("month", "")
+#   year = request.args.get("year","")
+#   formatted_date = f"{month} {year}"
+#   return formatted_date
 
-@app.route("/greet", methods=["GET"])
-def greet():
-  name = request.args.get("name", "")
-  greeting =f"Namaste, {name}"
-  return greeting
+# @app.route("/greet", methods=["GET"])
+# def greet():
+#   name = request.args.get("name", "")
+#   greeting =f"Namaste, {name}"
+#   return greeting
 
 @app.route("/address", methods=["GET"])
 def address():
@@ -194,11 +194,11 @@ def total_weight():
   totalWeight = weight1 + weight2 + weight3
   return str(totalWeight)
 
-@app.route("/monthly-salary", methods=["GET"])
-def monthly_salary():
-  annual_salary = float(request.args.get("annualSalary", 0))
-  monthly_salary = annual_salary / 12
-  return str(monthly_salary)  
+# @app.route("/monthly-salary", methods=["GET"])
+# def monthly_salary():
+#   annual_salary = float(request.args.get("annualSalary", 0))
+#   monthly_salary = annual_salary / 12
+#   return str(monthly_salary)  
 
 @app.route("/total-pages", methods=["GET"]) 
 def total_pages():
@@ -276,6 +276,131 @@ def monthly_Salary():
   monthly_salary = hourlyWage * totalHours
   return f"Result: Your monthly salary is ₹{int(monthly_salary)}"
   
+# PY_1.3_CW (if-Else)
+
+@app.route("/check-number", methods=["GET"])
+def check_number():
+  number = float(request.args.get("number", 0))
+  if number >= 0:
+    result = "positive"
+  else:
+    result = "negative"
+  return f"Number is {result}"
+
+@app.route("/check-login", methods=["GET"])
+def check_login():
+  is_logged_in = request.args.get("isLoggedIn", "false") == "true"
+  if is_logged_in:
+    result = "User is logged in"
+  else: 
+    result = "User is not logged in"
+  return result
+  
+@app.route("/check-temperature", methods=["GET"])
+def check_temperature():
+  temperature = float(request.args.get("temperature", 0))
+  if temperature < 15:
+    result = "cold"
+  elif temperature <= 25:
+    result = "warm"
+  else:
+    result = "hot"
+  return f"Temperature is {result}"
+
+@app.route("/check-engagement", methods=["GET"])
+def check_engagement():
+  likes = int(request.args.get("likes", 0))
+  if likes < 100:
+    result = "low"
+  elif likes <= 500:
+    result = "moderate"
+  else:
+    result = "high"
+  return f"Engagement level is {result}"
+
+# PY_1.3_HW_1 (if-Else)
+
+@app.route("/check-whole-number", methods=["GET"])
+def check_whole_number():
+  number = float(request.args.get("number", 0))
+  if number >= 0:
+    result = "whole"
+  else:
+    result = "not whole"
+  return f"Number is {result} number"
+
+@app.route("/check-equal", methods=["GET"])
+def check_equal():
+  num1 = float(request.args.get("num1", 0))
+  num2 = float(request.args.get("num2", 0))
+  if num1 == num2:
+    result = "equal"
+  else:
+    result = "not equal"
+  return f"Numbers are {result}"
+
+@app.route("/check-active", methods=["GET"])
+def check_active():
+  isActive = request.args.get("isActive", "false") == "true"
+  if isActive:
+    result = "User is active"
+  else:
+    result = "User is not active"
+  return result
+
+@app.route("/check-discount", methods=["GET"])
+def check_discount():
+  cost = float(request.args.get("cost", 0))
+  if cost > 1000:
+    result = "User is eligible for a discount"
+  else:
+    result = "User is not eligible for a discount"
+  return result
+
+@app.route("/check-experience", methods=["GET"])
+def check_experience():
+  years = float(request.args.get("years", 0))
+  if years > 0:
+    result = "experienced"
+  elif years < 0:
+    result = "non-working"
+  else:
+    result = "fresher"
+  return f"Person is {result}"
+
+@app.route("/check-result", methods=["GET"])
+def check_result():
+  result = float(request.args.get("result", 0))
+  if result > 80:
+    grade = "A"
+  elif result > 50 and result < 80:
+    grade = "B"
+  else:
+    grade = "Fail"
+  return f"The grade is {grade}"
+
+@app.route("/check-attendance", methods=["GET"])
+def check_attendance():
+  attendance = float(request.args.get("attendance", 0))
+  if attendance < 50:
+    result = "low"
+  elif attendance < 90:
+    result = "moderate"
+  else: 
+    result = "high"
+  return f"Attendance is {result}"
+
+@app.route("/check-rating", methods=["GET"])
+def check_rating():
+  stars = float(request.args.get("stars", 0))
+  if stars < 3:
+    result = "low"
+  elif stars <= 4:
+    result = "moderate"
+  else:
+    result = 'high'
+  return f"Restaurant rating is {result}"
+
 
 if __name__ == "__main__":
   app.run()
