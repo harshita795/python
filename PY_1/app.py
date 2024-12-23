@@ -595,7 +595,56 @@ def is_time_sufficient():
   hours = float(request.args.get("hours", 0))
   return findRequiredTime(days, hours)
 
+# PY_1.4_HW_2 (modular functions)
 
+def generateProfileUrl(username):
+  return f"https://github.com/{username}"
+
+@app.route("/github-profile", methods=["GET"])
+def github_profile():
+  username = request.args.get("username", "")
+  return generateProfileUrl(username)
+
+def generateCertificate(first_name, last_name, course_name):
+  return f"This certification is awarded to {first_name} {last_name} for completing the course {course_name}"
+
+@app.route("/certificates", methods=["GET"])
+def certificates():
+  first_name = request.args.get("firstName", "")
+  last_name = request.args.get("lastName", "")
+  course_name = request.args.get("courseName", "")
+  return generateCertificate(first_name, last_name, course_name)
+
+def calculateGrade(maths, english, science):
+  gradeInPercentage = ((maths + english + science) / 300 ) * 100
+  return f"Your grade in percentage is {round(gradeInPercentage)}%"
+
+@app.route("/grades", methods=["GET"])
+def grades():
+  maths = float(request.args.get("maths", 0))
+  english = float(request.args.get("english", 0))
+  science = float(request.args.get("science", 0))
+  return calculateGrade(maths, english, science)
+
+def splitBill(billAmount, numberOfFriends):
+  splitAmount = billAmount / numberOfFriends
+  return f"Result: Each friend owes Rs. {int(splitAmount)} against the bill"
+
+@app.route("/split-bills", methods=["GET"])
+def split_bills():
+  billAmount = float(request.args.get("billAmount", 0))
+  numberOfFriends = int(request.args.get("numberOfFriends", 1))
+  return splitBill(billAmount, numberOfFriends)
+
+def calculateSalary(totalHours, hourlyWage):
+  monthlySalary = hourlyWage * totalHours
+  return f"Result: Your monthly salary is ₹{int(monthlySalary)}"
+
+@app.route("/monthly-salaries", methods=["GET"])
+def monthly_salaries():
+  totalHours = float(request.args.get("totalHours", 0))
+  hourlyWage = float(request.args.get("hourlyWage", 0))
+  return calculateSalary(totalHours, hourlyWage)
 
 
 
