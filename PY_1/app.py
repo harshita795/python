@@ -66,11 +66,11 @@ def formattedDate():
   formattedDate = f"{month}/{year}"
   return formattedDate
 
-@app.route("/greet", methods=["GET"])
-def greet():
-  city = request.args.get("city", "")
-  greeting = f"You live in {city}"
-  return greeting
+# @app.route("/greet", methods=["GET"])
+# def greet():
+#   city = request.args.get("city", "")
+#   greeting = f"You live in {city}"
+#   return greeting
 
 @app.route("/capital", methods=["GET"])
 def capital():
@@ -125,12 +125,12 @@ def sendotp():
   sendotp = f"Your OTP for account verification is {otp_code}. Do not share this with anyone"
   return sendotp
 
-@app.route("/welcome", methods=["GET"])
-def welcome():
-  first_name = request.args.get("firstName", "")
-  email = request.args.get("email", "")
-  welcome = f"Hey {first_name}. We're excited to have you here, we'll send future notifications to your registered mail ({email})"
-  return welcome
+# @app.route("/welcome", methods=["GET"])
+# def welcome():
+#   first_name = request.args.get("firstName", "")
+#   email = request.args.get("email", "")
+#   welcome = f"Hey {first_name}. We're excited to have you here, we'll send future notifications to your registered mail ({email})"
+#   return welcome
 
 
 @app.route("/github-profile", methods=["GET"])
@@ -515,6 +515,86 @@ def personalized_greeting():
   gender = request.args.get("gender", "")
   name = request.args.get("name", "")
   return getPersonalizedMessage(age, gender, name)
+
+# PY_1.4_HW_1 (modular functions)
+
+def getWelcomeMessage():
+  return f"We will now learn functions!"
+
+@app.route("/welcome", methods=["GET"])
+def welcome():
+  return getWelcomeMessage()
+
+def getGreetingMessage(username):
+  return f"Hey, {username}! Are you ready to learn functions with us?"
+
+@app.route("/greet", methods=["GET"])
+def greet():
+  username = request.args.get("username", "")
+  return getGreetingMessage(username)
+
+def checkYearsOfExp(yearsOfExp):
+  if(yearsOfExp > 0):
+    return f"You have some experience with functions. Great!"
+  else: 
+    return f"No worries. You will start writing functions in no time!"
+
+@app.route("/message", methods=["GET"])
+def message():
+  yearsOfExp = float(request.args.get("yearsOfExp", 0))
+  return checkYearsOfExp(yearsOfExp)
+
+def getTime(days, hours):
+  return str(hours * days)
+
+@app.route("/hours", methods=["GET"])
+def hours():
+  days = float(request.args.get("days", 0))
+  hours = float(request.args.get("hours", 0))
+  return getTime(days, hours)
+
+def getModuleCompletion(username, hasCompleted):
+  if hasCompleted:
+    return f"{username} has completed the modules"
+  else:
+    return f"{username} has not completed the modules"
+
+@app.route("/module-completion-status", methods=["GET"])
+def module_completion_status():
+  username = request.args.get("username", "")
+  hasCompleted = request.args.get("hasCompleted", "false") == "true"
+  return getModuleCompletion(username, hasCompleted)
+
+def getPersonalizedGreetingEach(city, name):
+  return f"Hey, {name}! What's famous about {city}?"
+
+@app.route("/personalized-greetings", methods=["GET"])
+def personalized_greetings():
+  city = request.args.get("city", "")
+  name = request.args.get("name", "")
+  return getPersonalizedGreetingEach(city, name)
+
+def findAge(birthyear):
+  return str(2024 - birthyear)
+
+@app.route("/find-age", methods=["GET"])
+def find_age():
+  birthyear = int(request.args.get("birthyear", 0))
+  return findAge(birthyear)
+
+def findRequiredTime(days, hours):
+  time = days * hours
+  if time > 30:
+    return f"The time being dedicated is sufficient for learning functions"
+  else:
+    return f"The time being dedicated is not sufficient for learning functions"
+
+@app.route("/is-time-sufficient", methods=["GET"])
+def is_time_sufficient():
+  days = float(request.args.get("days", 0))
+  hours = float(request.args.get("hours", 0))
+  return findRequiredTime(days, hours)
+
 
 
 
