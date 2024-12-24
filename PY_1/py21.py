@@ -134,6 +134,7 @@ def check_Stock_And_Order():
   return jsonify(stock_and_order)
 
 # PY_2.1_HW_2
+
 githubPublicData = {
 	'username': 'ankit123',
 	'fullName': 'Ankit Kumar',
@@ -191,9 +192,6 @@ def get_Repo_Url():
   repo_name = request.args.get("repoName", "")
   repo_url = getRepoUrl(githubPublicData, repo_name)
   return jsonify({"repoUrl" : repo_url})
-
-
-
 
 if __name__ == "__main__":
   app.run()
