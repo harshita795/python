@@ -133,6 +133,66 @@ def check_Stock_And_Order():
   stock_and_order = checkStockAndOrder(book)
   return jsonify(stock_and_order)
 
+# PY_2.1_HW_2
+githubPublicData = {
+	'username': 'ankit123',
+	'fullName': 'Ankit Kumar',
+	'email': 'ankit@gmail.com',
+	'repositories': 24,
+	'gists': 12,
+	'joinedOn': 'Sep 2018',
+}
+
+def getProfileUrl(githubPublicData):
+  return f"https://github.com/{githubPublicData['username']}"
+
+@app.route("/github-profile", methods=["GET"])
+def get_Profile_Url():
+  profile_url = getProfileUrl(githubPublicData)
+  return jsonify({"profileUrl": profile_url})
+
+def getPublicEmail(githubPublicData):
+  return f"{githubPublicData["email"]}"
+
+@app.route("/github-public-email", methods=["GET"])
+def get_Public_Email():
+  email = getPublicEmail(githubPublicData)
+  return jsonify({"public_email" : email})
+
+def getReposCount(githubPublicData):
+  return f"{githubPublicData["repositories"]}"
+
+@app.route("/github-repos-count", methods=["GET"])
+def get_Repos_Count():
+  repo_count = getReposCount(githubPublicData)
+  return jsonify({"reposCount" : repo_count})
+
+def getGistsCount(githubPublicData):
+  return f"{githubPublicData["gists"]}"
+
+@app.route("/github-gists-count", methods=["GET"])
+def get_Gists_Count():
+  gists_count = getGistsCount(githubPublicData)
+  return jsonify({"gistsCount" : gists_count})
+
+def getUserBio(githubPublicData):
+  return {'fullName': githubPublicData['fullName'], 'joinedOn': githubPublicData['joinedOn'], 'email': githubPublicData['email']}
+
+@app.route("/github-user-bio", methods=["GET"])
+def get_User_Bio():
+  user_bio = getUserBio(githubPublicData)
+  return jsonify(user_bio)
+
+def getRepoUrl(githubPublicData, repoName):
+  return f"https://github.com/{githubPublicData['username']}/{repoName}"
+
+@app.route("/github-repo-url", methods=["GET"])
+def get_Repo_Url():
+  repo_name = request.args.get("repoName", "")
+  repo_url = getRepoUrl(githubPublicData, repo_name)
+  return jsonify({"repoUrl" : repo_url})
+
+
 
 
 if __name__ == "__main__":
