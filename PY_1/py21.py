@@ -80,6 +80,59 @@ book = {
     'stock': 5,
 }
 
+@app.route("/book", methods=["GET"])
+def get_book():
+  return jsonify(book)
+
+def getFullTitleAndAuthor(book):
+  return f"{book["title"]} by {book["author"]}"
+
+@app.route("/book/fulltitle-author", methods=["GET"])
+def get_book_title_and_author():
+  fullTitleAndAuthor = getFullTitleAndAuthor(book)
+  return jsonify({"fullTitleAndAuthor": fullTitleAndAuthor})
+
+def getGenreAndAvailability(book):
+  return {"genre": book["genre"], "isAvailable": book["isAvailable"]}
+
+@app.route("/book/genre-availability", methods=["GET"])
+def get_Genre_And_Availability():
+  Genre_And_Availability = getGenreAndAvailability(book)
+  return jsonify(Genre_And_Availability)
+
+def calculateBookAge(book):
+  return str(2024 - book["publicationYear"])
+
+
+@app.route("/book/age", methods=["GET"])
+def calculate_Book_Age():
+  book_age = calculateBookAge(book)
+  return jsonify({"age": book_age})
+
+def getBookSummary(book):
+  return ( 
+    f"Title: {book['title']}, "
+    f"Author: {book['author']}, "
+    f"Genre: {book['genre']}, "
+    f"Published: {book['publicationYear']}"
+         )
+
+@app.route("/book/summary", methods=["GET"])
+def get_Book_Summary():
+  book_summary = getBookSummary(book)
+  return jsonify({"summary" : book_summary})
+
+def checkStockAndOrder(book):
+  if book["stock"] >= 1:
+    return {"status": "In Stock", "stock": book["stock"]}
+  else:
+    return {"status": "Out of Stock", "stock": book["stock"]}
+    
+@app.route("/book/stock-status", methods=["GET"])
+def check_Stock_And_Order():
+  stock_and_order = checkStockAndOrder(book)
+  return jsonify(stock_and_order)
+
 
 
 if __name__ == "__main__":
