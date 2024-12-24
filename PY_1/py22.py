@@ -89,6 +89,82 @@ def cheaper_products():
   cheaper_products = list(filter(lambda product: filterCheaperProducts(product, filter_param), products))
   return jsonify(cheaper_products)
 
+# PY_2.2_HW_2
+
+numbers = [-10, -5, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+def filterPrimeNumbers(number):
+  if number <= 1:
+    return False
+  for i in range(2, number):
+    if number % i == 0: 
+      return False
+  return True 
+
+@app.route("/prime-numbers", methods=["GET"])
+def prime_numbers():
+  result = []
+  for num in numbers:
+    if filterPrimeNumbers(num):
+      result.append(num)
+  return jsonify(result)
+
+def filterPositiveNumbers(number):
+  return number > 0
+
+@app.route("/positive-numbers", methods=["GET"])
+def positive_numbers():
+  result = []
+  for num in numbers:
+    if filterPositiveNumbers(num):
+      result.append(num)
+  return jsonify(result)
+
+def filterNegativeNumbers(number):
+  return number < 0
+
+@app.route("/negative-numbers", methods=["GET"])
+def negative_numbers():
+  result = []
+  for num in numbers:
+    if filterNegativeNumbers(num):
+      result.append(num)
+  return jsonify(result)
+
+def filterOddNumbers(number):
+  return number % 2 != 0
+
+@app.route("/odd-numbers", methods=["GET"])
+def odd_numbers():
+  result = []
+  for num in numbers:
+    if filterOddNumbers(num):
+      result.append(num)
+  return jsonify(result)
+
+def filterNumbersGreaterThan(number, value):
+  return number > value
+
+@app.route("/numbers-greater-than", methods=["GET"])
+def numbers_greater_than():
+  result = []
+  value = float(request.args.get("value", 3))
+  for num in numbers:
+    if filterNumbersGreaterThan(num, value):
+      result.append(num)
+  return jsonify(result)
+
+def filterNumbersLessThan(number, value):
+  return number < value
+
+@app.route("/numbers-less-than", methods=["GET"])
+def numbers_less_than():
+  result = []
+  value = float(request.args.get("value", 3))
+  for num in numbers:
+    if filterNumbersLessThan(num, value):
+      result.append(num)
+  return jsonify(result)
 
 
 if __name__ == "__main__":
