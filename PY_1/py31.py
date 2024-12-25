@@ -123,6 +123,91 @@ def get_people_ssn(ssn):
   person = findPeopleBySSN(people, ssn)
   return person
 
+phones = [
+  {'number': '123-456-7890', 'owner': 'Alice', 'type': 'mobile'},
+  {'number': '987-654-3210', 'owner': 'Bob', 'type': 'home'}
+]
+
+accounts = [
+  {'number': '111122223333', 'holder': 'Charlie', 'balance': 5000},
+  {'number': '444455556666', 'holder': 'Dave', 'balance': 3000}
+]
+
+licenses = [
+  {'number': 'D1234567', 'name': 'Eve', 'expiryDate': '2026-04-01'},
+  {'number': 'D7654321', 'name': 'Frank', 'expiryDate': '2024-11-15'}
+]
+
+employees = [
+  {'id': 'E1234', 'name': 'Grace', 'department': 'Engineering'},
+  {'id': 'E5678', 'name': 'Hank', 'department': 'Marketing'}
+]
+
+orders = [
+  {'id': 'ORD12345', 'customerName': 'Ivy', 'totalAmount': 150},
+  {'id': 'ORD67890', 'customerName': 'Jake', 'totalAmount': 200}
+]
+
+def findPhoneNumber(phones, phoneNumber):
+  for ele in phones:
+    if ele["number"] == phoneNumber:
+      return jsonify({'phone' : ele})
+  return jsonify(None)
+
+@app.route("/phones/find/", methods=["GET"])
+def get_number_by_phone():
+  phoneNumber = request.args.get("phoneNumber", "")
+  phone = findPhoneNumber(phones, phoneNumber)
+  return phone
+
+def findAccountNumber(accounts, accountNumber):
+  for ele in accounts:
+    if ele["number"] == accountNumber:
+      return jsonify({"account" : ele})
+  return jsonify(None)
+
+@app.route("/accounts/find", methods=["GET"])
+def get_account_by_number():
+  accountNumber = request.args.get("accountNumber", "")
+  account = findAccountNumber(accounts, accountNumber)
+  return account
+
+def findLicenseNumber(licenses, licenseNumber):
+  for ele in licenses:
+    if ele["number"] == licenseNumber:
+      return jsonify({'license' : ele})
+  return jsonify(None)
+
+@app.route("/licenses/find", methods=["GET"])
+def get_license_by_number():
+  licenseNumber = request.args.get("licenseNumber", "")
+  license = findLicenseNumber(licenses, licenseNumber)
+  return license
+
+def findEmployeeById(employees, employeeId):
+  for ele in employees:
+    if ele["id"] == employeeId:
+      return jsonify({'employee' : ele})
+  return jsonify(None)
+
+@app.route("/employees/find", methods=["GET"])
+def get_employee_by_id():
+  employeeId = request.args.get("employeeId", "")
+  employee = findEmployeeById(employees, employeeId)
+  return employee
+
+def findOrderById(orders, orderId):
+  for ele in orders:
+    if ele["id"] == orderId:
+      return jsonify({'order' : ele})
+  return jsonify(None)
+
+@app.route("/orders/find", methods=["GET"])
+def get_order_by_id():
+  orderId = request.args.get("orderId", "")
+  order = findOrderById(orders, orderId)
+  return order
+
 
 if __name__ == "__main__":
   app.run()
