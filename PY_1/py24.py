@@ -48,6 +48,57 @@ def sort_cars_by_mileage_descending():
   cars_copy.sort(key=get_mileage, reverse=True)
   return jsonify(cars_copy)
 
+# PY_2.4_HW_1
+
+heights = [160, 175, 180, 165, 170]
+
+def sortHeightsAscending(heights_copy):
+  return sorted(heights_copy)
+
+@app.route("/heights/sort-ascending", methods=["GET"])
+def sort_heights_ascending():
+  heights_copy = heights.copy()
+  sorted_heights = sortHeightsAscending(heights_copy)
+  return jsonify(sorted_heights)
+
+def sortHeightsDescending(heights):
+  return sorted(heights, reverse=True)
+
+@app.route("/heights/sort-descending", methods=["GET"])
+def sort_heights_descending():
+  sorted_heights = sortHeightsDescending(heights)
+  return jsonify(sorted_heights)
+
+employees = [
+  { "name": 'Rahul', "employeeId": 101, "salary": 50000 },
+  { "name": 'Sita', "employeeId": 102, "salary": 60000 },
+  { "name": 'Amit', "employeeId": 103, "salary": 45000 }
+]
+
+def sortEmployeesBySalaryDescending(employees):
+  return sorted(employees, key=lambda employee: employee["salary"], reverse=True)
+
+@app.route("/employees/sort-by-salary-descending", methods=["GET"])
+def get_employee_by_salary_descending():
+  sorted_employee = sortEmployeesBySalaryDescending(employees)
+  return jsonify(sorted_employee)
+
+books = [
+  { "title": 'The God of Small Things', "author": 'Arundhati Roy', "pages": 340 },
+  { "title": 'The White Tiger', "author": 'Aravind Adiga', "pages": 321 },
+  { "title": 'The Palace of Illusions', "author": 'Chitra Banerjee', "pages": 360 }
+]
+
+def sortBooksByPagesAscending(books):
+  return sorted(books, key=lambda book: book["pages"])
+
+@app.route("/books/sort-by-pages-ascending", methods=["GET"])
+def get_books_by_pages_ascending():
+  sorted_books = sortBooksByPagesAscending(books)
+  return jsonify(sorted_books)
+
+
+
 
 
 if __name__ == "__main__":
