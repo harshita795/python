@@ -4,12 +4,12 @@ app = Flask(__name__)
 
 # PY_2.3_CW
 
-products = [
-  {"name": "Laptop", "price": 75000, "category": "Electronics"},
-  {"name": "Smartphone", "price": 30000, "category": "Electronics"},
-  {"name": "Headphones", "price": 1500, "category": "Accessories"},
-  {"name": "Backpack", "price": 2000, "category": "Fashion"}
-]
+# products = [
+#   {"name": "Laptop", "price": 75000, "category": "Electronics"},
+#   {"name": "Smartphone", "price": 30000, "category": "Electronics"},
+#   {"name": "Headphones", "price": 1500, "category": "Accessories"},
+#   {"name": "Backpack", "price": 2000, "category": "Fashion"}
+# ]
 
 cars = [
   {"make": "Toyota", "model": "Corolla", "mileage": 15000},
@@ -17,11 +17,11 @@ cars = [
   {"make": "Ford", "model": "Focus", "mileage": 30000}
 ]
 
-movies = [
-  {"title": "Inception", "genre": "Sci-Fi", "rating": 8},
-  {"title": "The Dark Knight", "genre": "Action", "rating": 9},
-  {"title": "Forrest Gump", "genre": "Drama", "rating": 7}
-]
+# movies = [
+#   {"title": "Inception", "genre": "Sci-Fi", "rating": 8},
+#   {"title": "The Dark Knight", "genre": "Action", "rating": 9},
+#   {"title": "Forrest Gump", "genre": "Drama", "rating": 7}
+# ]
 
 orders = [
   {"orderId": 101, "customerName": "Alice Johnson", "status": "Pending"},
@@ -63,12 +63,12 @@ def get_order_by_status(status):
 
 # PY_2.3_HW_1
 
-employees = [
-  { "name": 'Rahul Gupta', "department": 'HR', "salary": 50000 },
-  { "name": 'Sneha Sharma', "department": 'Finance', "salary": 60000 },
-  { "name": 'Priya Singh', "department": 'Marketing', "salary": 55000 },
-  { "name": 'Amit Kumar', "department": 'IT', "salary": 65000 }
-] 
+# employees = [
+#   { "name": 'Rahul Gupta', "department": 'HR', "salary": 50000 },
+#   { "name": 'Sneha Sharma', "department": 'Finance', "salary": 60000 },
+#   { "name": 'Priya Singh', "department": 'Marketing', "salary": 55000 },
+#   { "name": 'Amit Kumar', "department": 'IT', "salary": 65000 }
+# ] 
 
 def filter_by_department(employee, department):
   return employee["department"] == department
@@ -134,6 +134,103 @@ def filter_task_by_status(task, status):
 @app.route("/tasks/status/<string:status>", methods=["GET"])
 def get_task_by_status(status):
   result = [task for task in tasks if filter_task_by_status(task, status)]
+  return jsonify(result)
+
+# PY_2.3_HW_1
+
+products = [
+  { "name": 'Product A', "inStock": "true" },
+  { "name": 'Product B', "inStock": "false" },
+  { "name": 'Product C', "inStock": "true" },
+  { "name": 'Product D', "inStock": "false" }
+]
+
+users = [
+  { "name": 'Alice', "age": 25 },
+  { "name": 'Bob', "age": 30 },
+  { "name": 'Charlie', "age": 17 },
+  { "name": 'Dave', "age": 16 }
+]
+
+productPrices = [
+  { "name": 'Product A', "price": 50 },
+  { "name": 'Product B', "price": 150 },
+  { "name": 'Product C', "price": 200 },
+  { "name": 'Product D', "price": 90 }
+]
+
+articles = [
+  { "title": 'Article A', "wordCount": 400 },
+  { "title": 'Article B', "wordCount": 600 },
+  { "title": 'Article C', "wordCount": 700 },
+  { "title": 'Article D', "wordCount": 300 }
+]
+
+
+movies = [
+  { "title": 'Movie A', "rating": 8.5 },
+  { "title": 'Movie B', "rating": 7.0 },
+  { "title": 'Movie C', "rating": 9.0 },
+  { "title": 'Movie D', "rating": 6.5 }
+]
+
+employees = [
+  { "name": 'Employee A', "experience": 3 },
+  { "name": 'Employee B', "experience": 6 },
+  { "name": 'Employee C', "experience": 10 },
+  { "name": 'Employee D', "experience": 2 }
+]
+
+def filter_by_stock(product):
+  return product["inStock"] == "true"
+
+@app.route("/in-stock-products", methods=["GET"])
+def get_product_by_in_stock():
+  result = [product for product in products if filter_by_stock(product)]
+  return jsonify(result)
+
+def filter_adult(user):
+  return user["age"] >= 18
+
+@app.route("/adult-users", methods=["GET"])
+def get_user_by_age():
+  result = [user for user in users if filter_adult(user)]
+  return jsonify(result)
+
+def filterExpensiveProducts(productPrice, price):
+  return productPrice["price"] > price
+
+@app.route("/expensive-products", methods=["GET"])
+def get_expensive_product():
+  price = int(request.args.get("price", 0))
+  result = [productPrice for productPrice in productPrices if filterExpensiveProducts(productPrice, price)]
+  return jsonify(result)
+
+def filterLongArticles(article, minWords):
+  return article["wordCount"] > minWords
+
+@app.route("/long-articles", methods=["GET"])
+def get_long_articles():
+  minWords = int(request.args.get("minWords", 0))
+  result = [article for article in articles if filterLongArticles(article, minWords)]
+  return jsonify(result)
+
+def filterHighRatedMovie(movie, rating):
+  return movie["rating"] > rating
+
+@app.route("/high-rated-movies", methods=["GET"])
+def get_high_rated_movies():
+  rating = float(request.args.get("rating", 0))
+  result = [movie for movie in movies if filterHighRatedMovie(movie, rating)]
+  return jsonify(result)
+
+def filterExperiencedEmployees(employee, years):
+  return employee["experience"] > years
+
+@app.route("/experienced-employees", methods=["GET"])
+def get_experienced_employees():
+  years = float(request.args.get("years", 0))
+  result = [employee for employee in employees if filterExperiencedEmployees(employee, years)]
   return jsonify(result)
 
 if __name__ == "__main__":
