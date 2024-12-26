@@ -152,8 +152,74 @@ reviews = [
   {'id': 4, 'product_id': 4, 'rating': 4, 'content': 'Good value for money.'},
 ]
 
+def updateMovieAvailability(movies, id, available):
+  for movie in movies:
+    if movie["id"] == id:
+      movie["available"] = available
+      break
+  return movie
 
+@app.route("/movies/update", methods=["GET"])
+def update_movie_by_id():
+  id = int(request.args.get("id", 0))
+  available = request.args.get("available").lower() == "true"
+  result = updateMovieAvailability(movies, id, available)
+  return jsonify({"updatedMovie" : result})
 
+def deleteMovieById(movie, id):
+  return not movie["id"] == id
+
+@app.route("/movies/delete", methods=["GET"])
+def delete_movie_by_id():
+  id = int(request.args.get("id", 0))
+  result = list(filter(lambda movie: deleteMovieById(movie, id), movies))
+  return jsonify({'Remaining Movies' : result})
+
+def updateReviewContent(reviews, id, content):
+  for review in reviews:
+    if review["id"] == id:
+      review["content"] = content
+      break
+  return review
+
+@app.route("/reviews/update", methods=["GET"])
+def update_review_by_id():
+  id = int(request.args.get("id", 0))
+  content = request.args.get("content", "")
+  result = updateReviewContent(reviews, id, content)
+  return jsonify({"Updated Review" : result})
+
+def deleteReviewsByProductId(review, id):
+  return not review["id"] == id
+
+@app.route("/reviews/delete", methods=["GET"])
+def delete_review_by_id():
+  id = int(request.args.get("product_id", 0))
+  result = list(filter(lambda review: deleteReviewsByProductId(review, id), reviews))
+  return jsonify({'Remaining Reviews' : result})
+
+def updateMovieGenre(movies, id, genre):
+  for movie in movies:
+    if movie["id"] == id:
+      movie["genre"] = genre
+      break
+  return movie
+
+@app.route("/movies/update-genre", methods=["GET"])
+def update_movie_by_id_genre():
+  id = int(request.args.get("id", 0))
+  genre = request.args.get("genre", "")
+  result = updateMovieGenre(movies, id, genre)
+  return jsonify({'Updated Movie' : result})
+
+def deleteMoviesByGenre(movie, genre):
+  return not movie["genre"] == genre
+
+@app.route("/movies/delete-by-genre", methods=["GET"])
+def delete_movie_by_genre():
+  genre = request.args.get("genre", "")
+  result = list(filter(lambda movie: deleteMoviesByGenre(movie, genre), movies))
+  return jsonify(result)
 
 if __name__ == "__main__":
   app.run()
