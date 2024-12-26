@@ -58,6 +58,8 @@ def search_post():
       matched_posts.append(post)
   return jsonify(matched_posts)
 
+# PY_3.3_HW_1
+
 movies = [
   {'id': 1, 'title': 'Inception', 'genre': 'Sci-Fi', 'available': True},
   {'id': 2, 'title': 'Titanic', 'genre': 'Romance', 'available': False},
@@ -143,6 +145,93 @@ def search_reviews():
   rating = float(request.args.get("rating", 0))
   result = searchReviewsByProductAndRating(reviews, product_id, rating)
   return result
+
+# PY_3.3_HW_2
+
+customers= [
+  {'id': 1, 'name': 'Alice', 'age': 30, 'city': 'New York', 'membership': 'Premium'},
+  {'id': 2, 'name': 'Bob', 'age': 45, 'city': 'Los Angeles', 'membership': 'Basic'},
+  {'id': 3, 'name': 'Eve', 'age': 28, 'city': 'San Francisco', 'membership': 'Gold'},
+  {'id': 4, 'name': 'Frank', 'age': 60, 'city': 'Chicago', 'membership': 'Premium'}
+]
+
+cars = [
+  {'id': 1, 'make': 'Toyota', 'model': 'Camry', 'year': 2020, 'price': 25000},
+  {'id': 2, 'make': 'Honda', 'model': 'Civic', 'year': 2019, 'price': 22000},
+  {'id': 3, 'make': 'Ford', 'model': 'Mustang', 'year': 2021, 'price': 35000},
+  {'id': 4, 'make': 'Chevrolet', 'model': 'Malibu', 'year': 2020, 'price': 23000},
+]
+
+def filterCustomersByAgeAndMembership(customers, age, membership):
+  filtered_customers = []
+  for customer in customers:
+    if customer["age"] == age and customer["membership"] == membership:
+      filtered_customers.append(customer)
+  return jsonify({'Filtered Customers' : filtered_customers})
+
+@app.route("/customers/filter", methods=["GET"])
+def filter_customer_by_age_and_membership():
+  age = float(request.args.get("age", 0))
+  membership = request.args.get("membership", "")
+  result = filterCustomersByAgeAndMembership(customers, age, membership)
+  return result
+
+def findCarsByPriceOrYear(cars, price, year):
+  filtered_cars = []
+  for car in cars:
+    if car["price"] == price or car["year"] == year:
+      filtered_cars.append(car)
+  return jsonify({'Filtered Cars' : filtered_cars})
+
+@app.route("/cars/find", methods=["GET"])
+def find_car_by_price_or_year():
+  price = float(request.args.get("price", 0))
+  year = int(request.args.get("year", 0))
+  result = findCarsByPriceOrYear(cars, price, year)
+  return result
+
+def filterCustomersByCityOrMembership(customers, city, membership):
+  filtered_customers = []
+  for customer in customers:
+    if customer["city"] == city or customer["membership"] == membership:
+      filtered_customers.append(customer)
+  return jsonify({'Filtered Customers' : filtered_customers})
+
+@app.route("/customers/filterByCity", methods=["GET"])
+def filter_customer_by_city_membership():
+  city = request.args.get("city", "")
+  membership = request.args.get("membership", "")
+  result = filterCustomersByCityOrMembership(customers, city, membership)
+  return result
+
+def filterCarsByMakeAndYear(cars, make, year):
+  filtered_cars = []
+  for car in cars:
+    if car["make"] == make and car["year"] == year:
+      filtered_cars.append(car)
+  return jsonify({'Filtered Cars' : filtered_cars})
+
+@app.route("/cars/filter", methods=["GET"])
+def filter_car_by_make_and_year():
+  make = request.args.get("make", "")
+  year = int(request.args.get("year", 0))
+  result = filterCarsByMakeAndYear(cars, make, year)
+  return result
+
+def findCustomersByAgeOrCity(customers, age, city):
+  filtered_customers = []
+  for customer in customers:
+    if customer["age"] == age or customer["city"] == city:
+      filtered_customers.append(customer)
+  return jsonify({'Filtered Customers' : filtered_customers})
+
+@app.route("/customers/find", methods=["GET"])
+def get_customer_by_age_or_city():
+  age = float(request.args.get("age", 0))
+  city = request.args.get("city", "")
+  result = findCustomersByAgeOrCity(customers, age, city)
+  return result
+
 
 if __name__ == "__main__":
   app.run()
